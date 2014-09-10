@@ -1,0 +1,160 @@
+Port 8090
+BindAddress 0.0.0.0
+MaxHTTPConnections 2000
+MaxClients 1000
+MaxBandwidth 20000
+CustomLog -
+#NoDaemon
+
+<Feed feed1.ffm>
+	File /tmp/feed1.ffm
+	FileMaxSize 100M
+	#ACL allow 127.0.0.1
+</Feed>
+
+# hq x264 stream
+<Stream livehq.flv>
+	Format flv
+	Feed feed1.ffm
+
+	VideoCodec libx264
+	VideoFrameRate 30
+	VideoBitRate 1536
+	VideoSize 1280x720
+	AVOptionVideo crf 21
+	AVOptionVideo preset veryslow
+	AVOptionVideo flags +global_header
+	AVOptionVideo qmin 10
+	AVOptionVideo qmax 51
+	AVOptionVideo fps 30
+
+	AudioCodec aac
+	AudioBitRate 196
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+</Stream>
+
+# hq mpeg2 stream, must be partially reencoded for DVD
+<Stream livehq.ts>
+	Format mpegts
+	Feed feed1.ffm
+
+	VideoCodec mpeg2video
+	VideoFrameRate 25
+	VideoBitRate 8000
+	VideoSize 720x576
+	AVOptionVideo flags +global_header
+	AVOptionVideo target pal-dvd
+	#AVOptionVideo r 25
+	#AVOptionVideo sameq -s 720x576
+	#AVOptionVideo aspect 16/9
+
+	AudioCodec ac3
+	AudioBitRate 192
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+	AVOptionAudio vstrict 0
+</Stream>
+
+<Stream livemq.flv>
+	Format flv
+	Feed feed1.ffm
+
+	VideoCodec libx264
+	VideoFrameRate 30
+	VideoBitRate 384
+	VideoSize 640x352
+	AVOptionVideo crf 21
+	AVOptionVideo preset veryslow
+	AVOptionVideo flags +global_header
+
+	AVOptionVideo qmin 10
+	AVOptionVideo qmax 51
+	AVOptionVideo b-adapt 2
+	AVOptionVideo b-pyramid
+	AVOptionVideo deblock -1:-1
+	AVOptionVideo aq-strength 1.05
+	AVOptionVideo nr 1000
+	AVOptionVideo fps 30
+
+	AudioCodec aac
+	#Strict -2
+	AudioBitRate 96
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+</Stream>
+
+<Stream livelq.flv>
+	Format flv
+	Feed feed1.ffm
+
+	VideoCodec libx264
+	VideoFrameRate 15
+	VideoBitRate 128
+	VideoSize 640x352
+	AVOptionVideo crf 21
+	AVOptionVideo preset veryslow
+	AVOptionVideo flags +global_header
+
+	AVOptionVideo qmin 10
+	AVOptionVideo qmax 51
+	AVOptionVideo fps 15
+
+	AudioCodec aac
+	AudioBitRate 64
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+</Stream>
+
+<Stream livevlq.flv>
+	Format flv
+	Feed feed1.ffm
+
+	VideoCodec libx264
+	VideoFrameRate 15
+	VideoBitRate 96
+	VideoSize 320x176
+	AVOptionVideo crf 21
+	AVOptionVideo preset veryslow
+	AVOptionVideo flags +global_header
+
+	AVOptionVideo qmin 10
+	AVOptionVideo qmax 51
+	AVOptionVideo fps 15
+
+	AudioCodec aac
+	AudioBitRate 32
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+</Stream>
+
+<Stream liveaudio.mp3>
+    Feed feed1.ffm
+    Format mp3
+    AudioCodec libmp3lame
+    AudioBitRate 96
+    AudioChannels 2
+    AudioSampleRate 44100
+    NoVideo
+</Stream>
+
+##################################################################
+# Special streams
+##################################################################
+<Stream stat.html>
+	Format status
+	# Only allow local people to get the status
+	ACL allow localhost
+	ACL allow 192.168.0.0 192.168.255.255
+</Stream>
+
+# Redirect index.html to the appropriate site
+<Redirect index.html>
+	URL http://www.ffmpeg.org/
+</Redirect>
+#############################################################

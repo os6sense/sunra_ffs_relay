@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Sunra::FFServer::Relay - RDoc Documentation</title>
+
+<link href="../../fonts.css" rel="stylesheet">
+<link href="../../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/search_index.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/searcher.js"></script>
+<script src="../../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">SunraLogging</span>
+  
+  
+  
+    <li><span class="include">SunraPS</span>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-_check_feed_cache_file">#_check_feed_cache_file</a>
+    
+    <li ><a href="#method-i-_start_feed">#_start_feed</a>
+    
+    <li ><a href="#method-i-_start_ffserver">#_start_ffserver</a>
+    
+    <li ><a href="#method-i-capture_pid">#capture_pid</a>
+    
+    <li ><a href="#method-i-ffserver_pid">#ffserver_pid</a>
+    
+    <li ><a href="#method-i-start">#start</a>
+    
+    <li ><a href="#method-i-status">#status</a>
+    
+    <li ><a href="#method-i-stop">#stop</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Sunra::FFServer::Relay">
+  <h1 id="class-Sunra::FFServer::Relay" class="class">
+    class Sunra::FFServer::Relay
+  </h1>
+
+  <section class="description">
+    
+<h4 id="class-Sunra::FFServer::Relay-label-Description">Description<span><a href="#class-Sunra::FFServer::Relay-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Starts ffserver (if it isnt running) and then runs whatever command is
+required to capture from the capture card. The output from this is then
+piped to ffserver if a ffmpeg pipe is specified. See the config file for an
+example</p>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-config" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">config</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Return the config file for the relay server.</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-lock_file" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">lock_file</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>Return the <a href="Relay.html#attribute-i-lock_file">#lock_file</a> for
+the relay server.</p>
+        
+        </div>
+      </div>
+      
+    </section>
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>loads the config file.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@config</span> = <span class="ruby-constant">Sunra</span><span class="ruby-operator">::</span><span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">Relay</span>
+
+  <span class="ruby-ivar">@lock_file</span> = <span class="ruby-constant">Sunra</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">FFSRelayLockFile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">lock_file</span>)
+  <span class="ruby-ivar">@feed_cache_file</span> = <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">cache_file</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-capture_pid" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">capture_pid</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-capture_pid-label-Description">Description<span><a href="#method-i-capture_pid-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Return the pid of the capture process</p>
+          
+          
+
+          
+          <div class="method-source-code" id="capture_pid-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">capture_pid</span>
+  <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">capture_pid</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ffserver_pid" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ffserver_pid</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-ffserver_pid-label-Description">Description<span><a href="#method-i-ffserver_pid-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Return the pid of the ffserver</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ffserver_pid-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ffserver_pid</span>
+  <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">ffserver_pid</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-start" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">start</span><span
+            class="method-args">(monitor=false, daemonized=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-start-label-Description">Description<span><a href="#method-i-start-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Start ffserver and the capture process if neither of them are running.</p>
+
+<h4 id="method-i-start-label-Params">Params<span><a href="#method-i-start-label-Params">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+<dl class="rdoc-list note-list"><dt><code>monitor</code>
+<dd>
+<p>do not exit the main loop. Default false.</p>
+</dd><dt><code>daemonized</code>
+<dd>
+<p>do not exit the main loop. Default true.</p>
+</dd></dl>
+
+<h4 id="method-i-start-label-Notes">Notes<span><a href="#method-i-start-label-Notes">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>The params monitor and daemonized do essentially the same thing, i.e. start
+a loop and don&#39;t exit until the lockfile is deleted. The  difference is
+in the default values and, importantly, the <strong>intent</strong>.</p>
+
+<p>monitor will be set to true when called from the command line and we want
+to be able to restart the feed with &#39;q&#39;. Otherwise it will be false
+but in that case, we will be running this as a daemon, and daemonized will
+be true.</p>
+
+<p>… its subtle (i.e. stupid)</p>
+          
+          
+
+          
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">monitor</span>=<span class="ruby-keyword">false</span>, <span class="ruby-identifier">daemonized</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">_check_feed_cache_file</span> <span class="ruby-ivar">@feed_cache_file</span>
+
+  <span class="ruby-ivar">@ffserver_pid</span>, <span class="ruby-ivar">@ffserver_thread</span> = <span class="ruby-identifier">_start_ffserver</span>
+  <span class="ruby-ivar">@cmd_pid</span>, <span class="ruby-ivar">@cmd_thread</span> = <span class="ruby-identifier">_start_feed</span>
+
+  <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">create</span>([<span class="ruby-ivar">@ffserver_pid</span>, <span class="ruby-ivar">@cmd_pid</span>])
+  
+  <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-string">&quot;Monitoring Relay Service. CTL-C to exit, q to restart &quot;</span>             <span class="ruby-string">&quot;feed&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">monitor</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">monitor</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">daemonized</span>
+    <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">sleep</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">exit</span> <span class="ruby-value">0</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">exists?</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-status" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">status</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-status-label-Descripiton">Descripiton<span><a href="#method-i-status-label-Descripiton">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Return the status of the ffserver and capture processes by checking for the
+existance of a lock file with pids.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="status-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
+  <span class="ruby-identifier">l</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pn</span>, <span class="ruby-identifier">pid</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;#{pn} [PID: #{pid}] &quot;</span>                      <span class="ruby-node">&quot;#{pid_exists?(pid) ? &#39;Running&#39; : &#39;Invalid!&#39;}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">exists?</span>
+    <span class="ruby-identifier">l</span>.<span class="ruby-identifier">call</span>(<span class="ruby-string">&quot;ffserver&quot;</span>, <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">ffserver_pid</span>)
+    <span class="ruby-identifier">l</span>.<span class="ruby-identifier">call</span>(<span class="ruby-string">&quot;capture&quot;</span>, <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">capture_pid</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-string">&quot;Service Stopped or Lock File Missing!&quot;</span>
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-string">&quot;FFServer is Running!&quot;</span> <span class="ruby-keyword">if</span> (
+      <span class="ruby-identifier">ffpid</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">get_pid</span>(<span class="ruby-string">&quot;ffserver&quot;</span>))
+    ) <span class="ruby-operator">&gt;</span> <span class="ruby-value">-1</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">cmdpid</span> = <span class="ruby-identifier">get_pid</span>(<span class="ruby-identifier">cmd</span> = 
+                             <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">capture_command</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot; &quot;</span>)[<span class="ruby-value">0</span>])) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Instance of capture command (#{cmd}) found running...&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">cmdpid</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">ffpid</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+      <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-string">&quot;WARNING! Service Status Inconsistent. &quot;</span>              <span class="ruby-string">&quot;Manually kill capture process and restart.&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-stop" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stop</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-stop-label-Description">Description<span><a href="#method-i-stop-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Stop both ffserver and capture. Just killing ffserver isn&#39;t always
+sufficient to stop the feed/capture program as well, however PS.kill also
+kills all child processes too.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="stop-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stop</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">exists?</span>
+    <span class="ruby-identifier">pids</span> = <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">pids</span>     <span class="ruby-comment"># copy the pids</span>
+    <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">delete</span>          <span class="ruby-comment"># and delete the lock file so that the</span>
+                               <span class="ruby-comment"># processes dont attempt to restart</span>
+    <span class="ruby-identifier">pids</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">kill</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">line</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span> <span class="ruby-ivar">@feed_cache_file</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span> <span class="ruby-ivar">@feed_cache_file</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="protected-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Protected Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-_check_feed_cache_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_check_feed_cache_file</span><span
+            class="method-args">(feed_cache_file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-_check_feed_cache_file-label-Description">Description<span><a href="#method-i-_check_feed_cache_file-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>if the feed file in ffserver exists and we dont have permissions to
+overwrite it, we&#39;ll end up with a “stale” feed. Check for this and
+attempt to delete it. If the file cannot be deleted we need to exit with a
+fatal error.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="_check_feed_cache_file-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_check_feed_cache_file</span>(<span class="ruby-identifier">feed_cache_file</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">f_present</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">feed_cache_file</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">feed_cache_file</span>, <span class="ruby-string">&#39;w&#39;</span>).<span class="ruby-identifier">close</span> <span class="ruby-comment"># attempt to open the file</span>
+                                          <span class="ruby-comment"># so that we can capture an</span>
+                                          <span class="ruby-comment"># the exception on failure.</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">feed_cache_file</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">f_present</span>
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">fatal</span> <span class="ruby-string">&quot;Insufficient permissions to open feed temporary&quot;</span>                           <span class="ruby-node">&quot;file #{feed_cache_file}&quot;</span>
+    <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-_start_feed" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_start_feed</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-_start_feed-label-Description">Description<span><a href="#method-i-_start_feed-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Start feed via configured command - if it crashes for any reason attempt to
+restart via recursive call to _start_feed. Note that there is a delay loop
+in order to give ffserver a chance to restart in case (the server is slow
+starting up) is the cause of the feed stopping.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="_start_feed-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 170</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_start_feed</span>
+  <span class="ruby-identifier">cmd</span> = <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">capture_command</span>
+  <span class="ruby-identifier">cmd</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; | #{@config.ffmpeg_pipe}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">ffmpeg_pipe</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&quot;</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">run_background_cmd</span>(<span class="ruby-ivar">@config</span>.<span class="ruby-identifier">command_name</span>, <span class="ruby-identifier">cmd</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">exists?</span>
+        [<span class="ruby-value">3</span>,<span class="ruby-value">2</span>,<span class="ruby-value">1</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-node">&quot;* (FEED) #{@config.command_name} DIED!!!!!!!!.&quot;</span>                    <span class="ruby-node">&quot;Attempting to restart in #{x}&quot;</span>
+          <span class="ruby-identifier">sleep</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-ivar">@cmd_pid</span>, <span class="ruby-ivar">@cmd_thread</span> = <span class="ruby-identifier">_start_feed</span>
+        <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">capture_pid</span> = <span class="ruby-ivar">@cmd_pid</span>
+      <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-_start_ffserver" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">_start_ffserver</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <h4 id="method-i-_start_ffserver-label-Description">Description<span><a href="#method-i-_start_ffserver-label-Description">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
+
+<p>Start ffserver - if it crashes for any reason attempt to restart via
+recursive call to _start_ffserver.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="_start_ffserver-source">
+            <pre><span class="ruby-comment"># File ffserver-relay.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_start_ffserver</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">run_background_cmd</span>(<span class="ruby-string">&quot;ffserver&quot;</span>, <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">ffserver_command</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">exists?</span>
+      <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-string">&quot;* FFSERVER DIED!!!!!!!!, attempting to restart&quot;</span>
+      <span class="ruby-identifier">sleep</span> <span class="ruby-value">0.1</span>
+      <span class="ruby-ivar">@ffserver_pid</span>, <span class="ruby-ivar">@ffserver_thread</span> = <span class="ruby-identifier">_start_ffserver</span>
+      <span class="ruby-ivar">@lock_file</span>.<span class="ruby-identifier">ffserver_pid</span> = <span class="ruby-ivar">@ffserver_pid</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

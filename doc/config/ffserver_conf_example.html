@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>ffserver.conf.example - RDoc Documentation</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Gemfile.html">Gemfile</a>
+  
+    <li><a href="../Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="../Guardfile.html">Guardfile</a>
+  
+    <li><a href="../README.html">README</a>
+  
+    <li><a href="../Rakefile.html">Rakefile</a>
+  
+    <li><a href="../bin/sunra-ffserver-relay.html">sunra-ffserver-relay</a>
+  
+    <li><a href="../config/ffserver_conf_example.html">ffserver.conf.example</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page config/ffserver.conf.example">
+
+<p>Port 8090 BindAddress 0.0.0.0 MaxHTTPConnections 2000 MaxClients 1000
+MaxBandwidth 20000 CustomLog - #NoDaemon</p>
+
+<p>&lt;Feed feed1.ffm&gt;</p>
+
+<pre>File /tmp/feed1.ffm
+FileMaxSize 100M
+#ACL allow 127.0.0.1</pre>
+
+<p>&lt;/Feed&gt;</p>
+
+<p># hq x264 stream &lt;Stream livehq.flv&gt;</p>
+
+<pre>Format flv
+Feed feed1.ffm
+
+VideoCodec libx264
+VideoFrameRate 30
+VideoBitRate 1536
+VideoSize 1280x720
+AVOptionVideo crf 21
+AVOptionVideo preset veryslow
+AVOptionVideo flags +global_header
+AVOptionVideo qmin 10
+AVOptionVideo qmax 51
+AVOptionVideo fps 30
+
+AudioCodec aac
+AudioBitRate 196
+AudioChannels 2
+AudioSampleRate 44100
+AVOptionAudio flags +global_header</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p># hq mpeg2 stream, must be partially reencoded for DVD &lt;Stream
+livehq.ts&gt;</p>
+
+<pre>Format mpegts
+Feed feed1.ffm
+
+VideoCodec mpeg2video
+VideoFrameRate 25
+VideoBitRate 8000
+VideoSize 720x576
+AVOptionVideo flags +global_header
+AVOptionVideo target pal-dvd
+#AVOptionVideo r 25
+#AVOptionVideo sameq -s 720x576
+#AVOptionVideo aspect 16/9
+
+AudioCodec ac3
+AudioBitRate 192
+AudioChannels 2
+AudioSampleRate 44100
+AVOptionAudio flags +global_header
+AVOptionAudio vstrict 0</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p>&lt;Stream livemq.flv&gt;</p>
+
+<pre>Format flv
+Feed feed1.ffm
+
+VideoCodec libx264
+VideoFrameRate 30
+VideoBitRate 384
+VideoSize 640x352
+AVOptionVideo crf 21
+AVOptionVideo preset veryslow
+AVOptionVideo flags +global_header
+
+AVOptionVideo qmin 10
+AVOptionVideo qmax 51
+AVOptionVideo b-adapt 2
+AVOptionVideo b-pyramid
+AVOptionVideo deblock -1:-1
+AVOptionVideo aq-strength 1.05
+AVOptionVideo nr 1000
+AVOptionVideo fps 30
+
+AudioCodec aac
+#Strict -2
+AudioBitRate 96
+AudioChannels 2
+AudioSampleRate 44100
+AVOptionAudio flags +global_header</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p>&lt;Stream livelq.flv&gt;</p>
+
+<pre>Format flv
+Feed feed1.ffm
+
+VideoCodec libx264
+VideoFrameRate 15
+VideoBitRate 128
+VideoSize 640x352
+AVOptionVideo crf 21
+AVOptionVideo preset veryslow
+AVOptionVideo flags +global_header
+
+AVOptionVideo qmin 10
+AVOptionVideo qmax 51
+AVOptionVideo fps 15
+
+AudioCodec aac
+AudioBitRate 64
+AudioChannels 2
+AudioSampleRate 44100
+AVOptionAudio flags +global_header</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p>&lt;Stream livevlq.flv&gt;</p>
+
+<pre>Format flv
+Feed feed1.ffm
+
+VideoCodec libx264
+VideoFrameRate 15
+VideoBitRate 96
+VideoSize 320x176
+AVOptionVideo crf 21
+AVOptionVideo preset veryslow
+AVOptionVideo flags +global_header
+
+AVOptionVideo qmin 10
+AVOptionVideo qmax 51
+AVOptionVideo fps 15
+
+AudioCodec aac
+AudioBitRate 32
+AudioChannels 2
+AudioSampleRate 44100
+AVOptionAudio flags +global_header</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p>&lt;Stream liveaudio.mp3&gt;</p>
+
+<pre>Feed feed1.ffm
+Format mp3
+AudioCodec libmp3lame
+AudioBitRate 96
+AudioChannels 2
+AudioSampleRate 44100
+NoVideo</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p>################################################################## #
+Special streams
+##################################################################
+&lt;Stream stat.html&gt;</p>
+
+<pre>Format status
+# Only allow local people to get the status
+ACL allow localhost
+ACL allow 192.168.0.0 192.168.255.255</pre>
+
+<p>&lt;/Stream&gt;</p>
+
+<p># Redirect index.html to the appropriate site &lt;Redirect index.html&gt;</p>
+
+<pre>URL http://www.ffmpeg.org/</pre>
+
+<p>&lt;/Redirect&gt;
+#############################################################</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
