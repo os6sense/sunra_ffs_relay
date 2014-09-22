@@ -44,9 +44,7 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.0)
     slop (3.6.0)
-    sunra_config (0.0.22)
-    sunra_lockfile (0.0.1)
-    sunra_service (0.0.2)
+    sunra_utils (0.0.1)
     thor (0.19.1)
     timers (4.0.1)
       hitimes
@@ -59,6 +57,4 @@ DEPENDENCIES
   guard-rspec
   rake
   rspec
-  sunra_config (~> 0.0.9)
-  sunra_lockfile (~> 0.0.1)
-  sunra_service (~> 0.0.1)
+  sunra_utils

@@ -1,3 +1,4 @@
+# TODO: no need for some of the install steps.
 require 'rake'
 
 require 'rspec/core/rake_task'

@@ -9,8 +9,10 @@
 # since this will be detected as the feed dying and the relay server
 # will restart the feed from the begining.
 
+require 'sunra_utils/version'
+puts Sunra::Utils::VERSION
+require 'sunra_utils/service'
 
-require 'sunra_service'
 require_relative 'ffserver-relay'
 
 include Sunra::Utils::Service

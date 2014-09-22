@@ -1,10 +1,10 @@
 # File:: ffserver-relay.rb
 # ==== Description
 
-require 'sunra_config/relay'
-require 'sunra_ps'
-require 'sunra_logging'
-require 'sunra_lockfile'
+require 'sunra_utils/config/relay'
+require 'sunra_utils/ps'
+require 'sunra_utils/logging'
+require 'sunra_utils/lockfile'
 
 module Sunra
   module FFServer
@@ -18,8 +18,8 @@ module Sunra
     # Wraps ffmpeg to provide a stream to ffserver, performing some management
     # of the process such as auto restarting and cache cleaning.
     class Relay
-      include SunraLogging
-      include SunraPS
+      include Sunra::Utils::Logging
+      include Sunra::Utils::PS
 
       # Return the config file for the relay server.
       attr_reader :config
@@ -29,7 +29,7 @@ module Sunra
 
       # loads the config file.
       def initialize
-        @config = Sunra::Config::Relay
+        @config = Sunra::Utils::Config::Relay
 
         @lock_file = Sunra::Utils::FFSRelayLockFile.new(@config.lock_file)
         @feed_cache_file = @config.cache_file
@@ -118,7 +118,7 @@ module Sunra
             ffpid = Integer(get_pid('ffserver'))
           ) > -1
 
-          if Integer(cmdpid = get_pid(cmd = 
+          if Integer(cmdpid = get_pid(cmd =
                                    @config.capture_command.split(' ')[0])) > 0
             logger.info "Instance of capture command (#{cmd}) found running..."
           end

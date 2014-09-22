@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-gem "sunra_config", "~> 0.0.9"
-gem "sunra_service", "~> 0.0.1"
-gem "sunra_lockfile", "~> 0.0.1"
+gem 'sunra_utils'
 
 group :development do
   gem "rake"
