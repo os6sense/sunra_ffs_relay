@@ -98,7 +98,7 @@ module Sunra
           end
         end
 
-        File.delete @feed_cache_file if File.exists? @feed_cache_file
+        File.delete @feed_cache_file if File.exist? @feed_cache_file
       end
 
       # ==== Descripiton
@@ -138,26 +138,24 @@ module Sunra
       # and attempt to delete it. If the file cannot be deleted we need to
       # exit with a fatal error.
       def _check_feed_cache_file(feed_cache_file)
-        begin
-          f_present = File.exists?(feed_cache_file)
-          File.open(feed_cache_file, 'w').close # attempt to open the file
-                                                # so that we can capture an
-                                                # the exception on failure.
-          File.delete feed_cache_file if not f_present
-        rescue
-          logger.fatal "Insufficient permissions to open feed temporary" \
-                         "file #{feed_cache_file}"
-          exit 1
-        end
+        f_present = File.exist?(feed_cache_file)
+        File.open(feed_cache_file, 'w').close # attempt to open the file
+                                              # so that we can capture an
+                                              # the exception on failure.
+        File.delete feed_cache_file unless f_present
+      rescue
+        logger.fatal 'Insufficient permissions to open feed temporary' \
+                     "file #{feed_cache_file}"
+        exit 1
       end
 
       # ==== Description
       # Start ffserver - if it crashes for any reason attempt to restart
       # via recursive call to _start_ffserver.
       def _start_ffserver
-        return run_background_cmd("ffserver", @config.ffserver_command) do
+        return run_background_cmd('ffserver', @config.ffserver_command) do
           if @lock_file.exists?
-            logger.error "* FFSERVER DIED!!!!!!!!, attempting to restart"
+            logger.error '* FFSERVER DIED!!!!!!!!, attempting to restart'
             sleep 0.1
             @ffserver_pid, @ffserver_thread = _start_ffserver
             @lock_file.ffserver_pid = @ffserver_pid
@@ -172,7 +170,7 @@ module Sunra
       # (the server is slow starting up) is the cause of the feed stopping.
       def _start_feed
         cmd = @config.capture_command
-        cmd += " | #{@config.ffmpeg_pipe}" if @config.ffmpeg_pipe != ""
+        cmd += " | #{@config.ffmpeg_pipe}" if @config.ffmpeg_pipe != ''
 
         return run_background_cmd(@config.command_name, cmd) do
           if @lock_file.exists?
