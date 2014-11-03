@@ -1,0 +1,54 @@
+
+# ffserver_command
+# command line for ffserver - Just "ffserver" should be sufficient.
+ffserver_command: "ffserver"
+
+# command_name
+# Simple name for the capture command. This should correspond to the name
+# that would be seen if doing a ps. Under a scenario where a capture program
+# such as bmdtools are being used to capture from the card "bmdcapture" would
+# be the correct value for command_name. When ffmpeg is being used for both 
+# capture and feeding ffserver, just "ffmpeg" is correct.
+command_name: "ffmpeg"
+
+# capture_command
+# Full command line to capture from the video/audio capture card.
+# 
+# if capturing directly via ffmpeg then include all ffmpeg options and the
+# target URL of the ffserver at the end.
+
+# For blackmagic cards use bmdcapture with ffmpeg_pipe e.g.
+
+# capture_command: "bmdcapture -m 2 -A 0 -C 0 -V 1 -F nut -f pipe:1"
+# ffmpeg_pipe: "ffmpeg -f alsa -i plughw:UA25 -i - -f ffm  http://localhost:8090/feed1.ffm"
+
+# For testing/re-encoding ffmpeg can be used. The following line puts ffmpeg 
+# into quiet mode (-v 0), limits the frame rate (-re) and uses one of the
+# blender OS films to feed into ffserver.
+capture_command: "ffmpeg -v 0 -re -i /home/lee/sunra/3rd_party/os_films/tears_of_steel_720p.mkv http://localhost:8090/feed1.ffm"
+
+# The following films are in the 3rdParty/OSFilms directory (if included) or 
+# can be downloaded from the urls provided:
+#
+# Sintel : https://durian.blender.org/download/
+#   Sintel.2010.1080p.mkv
+#   Sintel.2010.720p.mkv
+#
+# Tears Of Steel: http://mango.blender.org/download/
+#   tears_of_steel_1080p.mkv
+#   tears_of_steel_720p.mkv
+
+# ffmpeg_pipe
+# If you need to use something other than ffmpeg to capture enter the full
+# capture_command above use ffmpeg as a piped target.  Otherwise leave
+# ffmpeg_pipe blank or ommit it completely.
+ffmpeg_pipe: ""
+
+# lock_file
+# A lock file is required to record the pids of the ffmpeg processes. 
+lock_file: /tmp/sunra-ffserver-relay.lck
+
+# cache_file
+# This is the path to the file that the ffserver feed produces. See the
+# ffserver.conf feed section for the path.
+cache_file: /tmp/feed1.ffm

@@ -1,0 +1,68 @@
+Port 8090
+BindAddress 0.0.0.0
+MaxHTTPConnections 2000
+MaxClients 1000
+MaxBandwidth 80000
+CustomLog -
+
+<Feed feed1.ffm>
+	File /tmp/feed1.ffm
+	FileMaxSize 100M
+</Feed>
+
+##################################################################
+# High quality x264 stream. 
+# This is the PRIMARY stream used as a source for all video 
+# (the mp3 audio is a seperate stream).
+##################################################################
+<Stream livehq.flv>
+	Format flv
+	Feed feed1.ffm
+
+	VideoCodec libx264
+	VideoFrameRate 25
+	VideoBitRate 1536
+	VideoSize 1280x720
+	AVOptionVideo flags +global_header
+	AVOptionVideo fps 25
+	AVOptionVideo preset veryslow
+	AVOptionVideo bitrate 1536
+
+	AVOptionVideo qmin 10
+	AVOptionVideo qmax 51
+	AVOptionVideo fps 30
+	AVOptionVideo crf 21
+
+	NoAudio
+	AudioCodec aac
+	AudioBitRate 196
+	AudioChannels 2
+	AudioSampleRate 44100
+	AVOptionAudio flags +global_header
+</Stream>
+
+<Stream liveaudio.mp3>
+    Feed feed1.ffm
+    Format mp3
+    AudioCodec libmp3lame
+    AudioBitRate 96
+    AudioChannels 2
+    AudioSampleRate 44100
+    NoVideo
+</Stream>
+
+##################################################################
+# Special streams
+##################################################################
+<Stream stat.html>
+	Format status
+	# Only allow local people to get the status
+	ACL allow localhost
+	ACL allow 192.168.0.0 192.168.255.255
+</Stream>
+
+# Redirect index.html to the appropriate site
+<Redirect index.html>
+	URL http://www.ffmpeg.org/
+</Redirect>
+#############################################################

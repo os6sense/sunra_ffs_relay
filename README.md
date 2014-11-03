@@ -4,32 +4,35 @@ L A JACKSON (leej+sunra@sowhatresearch.com)
 
 COPYRIGHT
 ---------
-So What Research Ltd 2013
+So What Research Ltd 2014
+
+LICENSE
+-------
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any later
+version.
 
 DESCRIPTION
 -----------
-ffs-relay is a layer over ffserver, piping it with the feed from ffmpeg,
-monitoring the process and restarting as neccessary. ffserver-relay is
-responsible for starting ffserver and the capture program used to feed ffserver
-from the capture card.
+ffs_relay is responsible for starting ffserver and the capture program used to
+feed ffserver from the capture card. It is a layer over ffserver, piping it
+with the feed from ffmpeg, monitoring the process and restarting both feed and
+server as neccessary to ensure stability/continuity. 
 
-Edit /etc/sunra/config.yml specifying the capture command and if
-the output cannot be natively captured by ffmpeg, specify ffmpeg_pipe with:
-
-ffmpeg_pipe: ffmpeg -v 0 -i - http://localhost:8090/feed1.ffm"
-
-This allows for the capture and relaying of capture via 3rd party code e.g.
-bmdcapture.
-
-Ensure that you have a working ffserver installation - it is advised that a 
-version be built from source where possible. An example ffserver.conf file
-is included in the config directory.
+It acts as the first part in the chain for a suite of programs for the live
+recording/distribution of audio/video in multiple formats.
 
 REQUIREMENTS
 -------------
-ffserver
 ffmpeg
 ruby > 2.0.0
+
+It is advised that a version ffmpeg be built from source if possible to ensure
+that it is not crippled (e.g. lacking mp3 encoding support). 
+
+Also ensure that you have a working ffserver installation. An example
+ffserver.conf file is included in the config directory.
 
 INSTALL
 ------------
@@ -44,12 +47,12 @@ INSTALL
 
 CONFIGURATION
 -------------
-configration of sunra-ffserver-relay is done via editing /etc/sunra/relay.yml
+configration of sunra_ffserver_relay is done via editing /etc/sunra/relay.yml
 
 There are two scenarios supported for capture - one where a seperate program
 captures output from the video capture card and this is piped directly through
 ffmpeg, the other where ffmpeg captures the audio and video directly. Please
-see the config file for examples.
+see the example config file for examples.
 
 USAGE
 ----------
