@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'sunra_utils'
+gem 'sunra_utils', '>0.0.9'
 
 group :development do
   gem "rake"
