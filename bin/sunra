@@ -1,0 +1,45 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides: sunra
+# Required-Start:
+# Required-Stop:
+# Default-Start:
+# Default-Stop:
+# Short-Description: Sunra ffs-relay daemon
+### END INIT INFO
+
+set -e
+
+. /lib/lsb/init-functions
+
+PATH="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+RUBY="/usr/local/bin/ruby"
+RELAY="/var/sunra/sunra_ffs_relay/sunra_ffserver_relay.rb" 
+#FAILSAFE="/var/sunra/sunra_failsafe_service/sunra_failsafe.rb"
+
+case $1 in
+	start)
+	  log_daemon_msg "Starting ffs-relay daemon" "sunra"
+    $RUBY $RELAY start 
+		log_end_msg 0
+		;;
+	stop)
+	  log_daemon_msg "Stopping ffs-relay daemon" "sunra"
+    $RUBY $RELAY stop 
+		log_end_msg 0
+#    /var/sunra/recording/failsafe-service/sunra-failsafe.rb stop 
+		;;
+	restart)
+    #/var/sunra/ffs-relay/sunra-ffserver-relay.rb restart 
+    $RUBY $RELAY restart
+		;;
+	status)
+    #/var/sunra/ffs-relay/sunra-ffserver-relay.rb status 
+    $RUBY $RELAY status
+		;;
+	*)
+		echo "Usage: /etc/init.d/sunra {start|stop|reload|restart|force-reload|status}"
+		exit 1
+		;;
+esac
