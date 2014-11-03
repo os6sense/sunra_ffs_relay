@@ -10,11 +10,10 @@
 # will restart the feed from the begining.
 
 require 'sunra_utils/service'
-require_relative 'ffserver-relay'
+require_relative 'ffserver_relay'
 
 include Sunra::Utils::Service
 
-service_name = 'sunra-ffsrelay-server.rb'
 usage if ARGV.length != 1
-ffsr = Sunra::FFServer::Relay.new
-run(ffsr, ARGV[0], service_name)
+
+run(Sunra::FFServer::Relay.new, ARGV[0], 'sunra-ffsrelay-server.rb')
