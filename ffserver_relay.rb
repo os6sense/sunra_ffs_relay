@@ -1,6 +1,8 @@
-# File:: ffserver-relay.rb
+# File:: ffserver_relay.rb
 # ==== Description
+# Implements the funtionality for managing ffserver and the feed to that.
 
+require 'forwardable'
 require 'sunra_utils/config/relay'
 require 'sunra_utils/ps'
 require 'sunra_utils/logging'
@@ -18,6 +20,8 @@ module Sunra
     # Wraps ffmpeg to provide a stream to ffserver, performing some management
     # of the process such as auto restarting and cache cleaning.
     class Relay
+      extend Forwardable
+
       include Sunra::Utils::Logging
       include Sunra::Utils::PS
 
@@ -27,24 +31,14 @@ module Sunra
       # Return the lock_file for the relay server.
       attr_reader :lock_file
 
-      # loads the config file.
+      
+      def_delegators :@lock_file, :capture_pid, 
+                                  :ffserver_pid
+
       def initialize
         @config = Sunra::Utils::Config::Relay
-
         @lock_file = Sunra::Utils::FFSRelayLockFile.new(@config.lock_file)
         @feed_cache_file = @config.cache_file
-      end
-
-      # ==== Description
-      # Return the pid of the capture process
-      def capture_pid
-        @lock_file.capture_pid
-      end
-
-      # ==== Description
-      # Return the pid of the ffserver
-      def ffserver_pid
-        @lock_file.ffserver_pid
       end
 
       # ==== Description
@@ -62,9 +56,7 @@ module Sunra
       # monitor will be set to true when called from the command line and
       # we want to be able to restart the feed with 'q'. Otherwise it
       # will be false but in that case, we will be running this as a daemon,
-      # and daemonized will be true.
-      #
-      # ... its subtle (i.e. stupid)
+      # and daemonized will be true ... its subtle (i.e. stupid)
       def start(monitor = false, daemonized = true)
         _check_feed_cache_file @feed_cache_file
 
@@ -79,27 +71,16 @@ module Sunra
         main_loop(monitor, daemonized)
       end
 
-      def main_loop(monitor, daemonized)
-        if monitor || daemonized
-          loop do
-            sleep 1
-            exit 0 unless @lock_file.exists?
-          end
-        end
-      end
-
       # ==== Description
       # Stop both ffserver and capture. Just killing ffserver isn't always
       # sufficient to stop the feed/capture program as well, however PS.kill
       # also kills all child processes too.
       def stop
         if @lock_file.exists?
-          pids = @lock_file.pids     # copy the pids @lock_file.delete
-          # and delete the lock file so that the processes dont attempt to
-          # restart
-          pids.each do |line|
-            kill Integer(line)
-          end
+          pids = @lock_file.pids     # copy the pids @lock_file.delete and
+                                     # delete the lock file so that the 
+                                     # processes dont attempt to restart
+          pids.each { |line| kill Integer(line) }
         end
 
         File.delete @feed_cache_file if File.exist? @feed_cache_file
@@ -109,33 +90,70 @@ module Sunra
       # Return the status of the ffserver and capture processes by checking
       # for the existance of a lock file with pids.
       def status
-        l = lambda do |pn, pid|
-          logger.info "#{pn} [PID: #{pid}] " \
-                    "#{pid_exists?(pid) ? 'Running' : 'Invalid!'}"
-        end
+        return lock_file_status if @lock_file.exists?
 
-        if @lock_file.exists?
-          l.call('ffserver', @lock_file.ffserver_pid)
-          l.call('capture', @lock_file.capture_pid)
-        else
-          logger.info 'Service Stopped or Lock File Missing!'
-          logger.info 'FFServer is Running!' if (
-            ffpid = Integer(get_pid('ffserver'))
-          ) > -1
-
-          if Integer(cmdpid = get_pid(cmd =
-                                   @config.capture_command.split(' ')[0])) > 0
-            logger.info "Instance of capture command (#{cmd}) found running..."
-          end
-
-          if cmdpid > 0 && ffpid > 0
-            logger.warn 'WARNING! Service Status Inconsistent. ' \
-            'Manually kill capture process and restart.'
-          end
-        end
+        ffpid = ffserver_status
+        cmdpid = capture_command_status
+        check_service_consistency(cmdpid, ffpid)
       end
 
       protected
+
+      # ==== Description
+      # check the lock file pids
+      def lock_file_status
+        if @lock_file.exists?
+          log_pid('ffserver', ffserver_pid)
+          log_pid('capture', capture_pid)
+        else
+          logger.info 'Service Stopped OR Lock File Missing!'
+        end
+      end
+
+      # ==== Description
+      # Check that the capture command is running
+      def capture_command_status
+        cmd = @config.capture_command.split(' ')[0]
+        cmdpid = Integer(get_pid(cmd))
+        logger.info "Instance of capture command (#{cmd}) found running..." \
+          if cmdpid > 0
+        return cmdpid
+      end
+
+      # ==== Description
+      # Check the status of ffserver
+      def ffserver_status
+        ffpid = Integer(get_pid('ffserver'))
+        logger.info 'FFServer is Running!' if ffpid > -1
+        return ffpid
+      end
+
+      # ==== Description
+      # Check that the service is in a consistent state
+      def check_service_consistency(cmdpid, ffpid)
+        if cmdpid > 0 && ffpid > 0
+          logger.warn 'WARNING! Service Status Inconsistent. ' \
+          'Manually kill capture process and restart.'
+        end
+      end
+
+      # ==== Description
+      # Simple logging line for the pids
+      def log_pid(pn, pid)
+        logger.info "#{pn} [PID: #{pid}] " \
+                    "#{pid_exists?(pid) ? 'Running' : 'Invalid!'}"
+      end
+
+      # ==== Description
+      # loops when the relay is running as a monitor or a daemon
+      def main_loop(monitor, daemonized)
+        if monitor || daemonized
+          loop do
+            sleep 1
+            exit 0 unless @lock_file.exists?
+          end
+        end
+      end
 
       # ==== Description
       # if the feed file in ffserver exists and we dont have permissions
