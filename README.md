@@ -36,14 +36,8 @@ ffserver.conf file is included in the config directory.
 
 INSTALL
 ------------
-    cd ffserver-relay
+    cd ffs_relay
     bundle install
-
-    rvmsudo rake install
-
--- or --
-
-    sudo rake install
 
 CONFIGURATION
 -------------
