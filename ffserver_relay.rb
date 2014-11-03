@@ -76,6 +76,10 @@ module Sunra
         logger.info 'Monitoring Relay Service. CTL-C to exit, q to restart '\
             'feed' if monitor
 
+        main_loop(monitor, daemonized)
+      end
+
+      def main_loop(monitor, daemonized)
         if monitor || daemonized
           loop do
             sleep 1
@@ -90,9 +94,9 @@ module Sunra
       # also kills all child processes too.
       def stop
         if @lock_file.exists?
-          pids = @lock_file.pids     # copy the pids
-          @lock_file.delete          # and delete the lock file so that the
-                                     # processes dont attempt to restart
+          pids = @lock_file.pids     # copy the pids @lock_file.delete
+          # and delete the lock file so that the processes dont attempt to
+          # restart
           pids.each do |line|
             kill Integer(line)
           end
@@ -109,6 +113,7 @@ module Sunra
           logger.info "#{pn} [PID: #{pid}] " \
                     "#{pid_exists?(pid) ? 'Running' : 'Invalid!'}"
         end
+
         if @lock_file.exists?
           l.call('ffserver', @lock_file.ffserver_pid)
           l.call('capture', @lock_file.capture_pid)
@@ -170,7 +175,9 @@ module Sunra
       # (the server is slow starting up) is the cause of the feed stopping.
       def _start_feed
         cmd = @config.capture_command
-        cmd += " | #{@config.ffmpeg_pipe}" if @config.ffmpeg_pipe != ''
+        unless ['', nil].include?(@config.ffmpeg_pipe)
+          cmd += " | #{@config.ffmpeg_pipe}" 
+        end
 
         return run_background_cmd(@config.command_name, cmd) do
           if @lock_file.exists?
