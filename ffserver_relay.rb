@@ -31,8 +31,7 @@ module Sunra
       # Return the lock_file for the relay server.
       attr_reader :lock_file
 
-      
-      def_delegators :@lock_file, :capture_pid, 
+      def_delegators :@lock_file, :capture_pid,
                                   :ffserver_pid
 
       def initialize
@@ -78,7 +77,7 @@ module Sunra
       def stop
         if @lock_file.exists?
           pids = @lock_file.pids     # copy the pids @lock_file.delete and
-                                     # delete the lock file so that the 
+                                     # delete the lock file so that the
                                      # processes dont attempt to restart
           pids.each { |line| kill Integer(line) }
         end
@@ -194,7 +193,7 @@ module Sunra
       def _start_feed
         cmd = @config.capture_command
         unless ['', nil].include?(@config.ffmpeg_pipe)
-          cmd += " | #{@config.ffmpeg_pipe}" 
+          cmd += " | #{@config.ffmpeg_pipe}"
         end
 
         return run_background_cmd(@config.command_name, cmd) do
