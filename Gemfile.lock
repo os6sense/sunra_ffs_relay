@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/os6sense/sunra_utils.git
+  revision: a9f20905741df46b40daa3bbd79252923acd7e39
+  specs:
+    sunra_utils (0.1.8)
+      rest-client (~> 1.7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -28,7 +35,9 @@ GEM
       rb-inotify (>= 0.9)
     lumberjack (1.0.9)
     method_source (0.8.2)
+    mime-types (2.4.3)
     nenv (0.2.0)
+    netrc (0.10.3)
     notiffany (0.0.6)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -40,6 +49,9 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rest-client (1.7.3)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -55,7 +67,6 @@ GEM
     rspec-support (3.2.1)
     shellany (0.0.1)
     slop (3.6.0)
-    sunra_utils (0.1.2)
     thor (0.19.1)
     timers (4.0.1)
       hitimes
@@ -68,4 +79,4 @@ DEPENDENCIES
   guard-rspec
   rake
   rspec
-  sunra_utils (> 0.0.9)
+  sunra_utils (~> 0.1.8)!
