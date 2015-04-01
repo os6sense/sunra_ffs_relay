@@ -76,8 +76,8 @@ module Sunra
       # also kills all child processes too.
       def stop
         if @lock_file.exists?
-          pids = @lock_file.pids     # copy the pids @lock_file.delete and
-                                     # delete the lock file so that the
+          pids = @lock_file.pids     # copy the pids  
+	  @lock_file.delete          # and delete the lock file so that the
                                      # processes dont attempt to restart
           pids.each { |line| kill Integer(line) }
         end
